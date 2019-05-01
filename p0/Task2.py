@@ -20,3 +20,22 @@ Print a message:
 September 2016.".
 """
 
+talk_times = {}
+longest_talker = None
+longest_talk_time = 0
+
+for call in calls:
+    if call[0] not in talk_times:
+        talk_times[ call[0] ] = 0
+    if call[1] not in talk_times:
+        talk_times[ call[1] ] = 0
+    talk_times[ call[0] ] += int( call[3] )
+    talk_times[ call[1] ] += int( call[3] )
+
+for talker, time in talk_times.items():
+    if time > longest_talk_time:
+        longest_talker = talker
+        longest_talk_time = time
+
+print( "{0} spent the longest time, {1} seconds, on the phone during September 2016.".format( 
+    longest_talker, longest_talk_time ) )
