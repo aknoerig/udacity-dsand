@@ -44,8 +44,6 @@ to other fixed lines in Bangalore."
 The percentage should have 2 decimal digits
 """
 
-### Part A
-
 def isFromBangalore( number ):
   return number.startswith('(080)')
 
@@ -55,17 +53,20 @@ def getAreaCode( number ):
   elif number.startswith( '140' ):     # telemarketer
     return '140'
   else:
-    return number.split()[0]        # mobile
+    return number.split()[0]           # mobile
 
 codes_bangalore = list()
-calls_bangalore = list()
+total_bangalore_calls_count = 0
+local_bangalore_calls_count = 0
 
 for call in calls:
   if isFromBangalore( call[0] ):
-    calls_bangalore.append( call )
+    total_bangalore_calls_count += 1
     code = getAreaCode( call[1] )
     if code not in codes_bangalore:
       codes_bangalore.append( code )
+    if isFromBangalore( call[1] ):
+      local_bangalore_calls_count += 1
 
 codes_bangalore.sort()
 
@@ -73,17 +74,7 @@ print( "The numbers called by people in Bangalore have codes:" )
 for code in codes_bangalore:
   print( code )
 
+percentage_local = ( local_bangalore_calls_count / total_bangalore_calls_count ) * 100
 
-### Part B
-
-local_bangalore_calls_count = 0
-
-for call in calls_bangalore:
-  if isFromBangalore( call[1] ):
-    local_bangalore_calls_count += 1
-
-percentage = ( local_bangalore_calls_count / len( calls_bangalore ) ) * 100
-
-print( "{0} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.".format(
-  percentage
-) )
+print( "{:.2f} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.".format(
+  percentage_local ) )
