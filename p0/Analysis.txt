@@ -1,0 +1,27 @@
+# Runtime Analysis
+
+## Task 0
+
+O(1)
+
+## Task 1
+
+O(n)
+
+## Task 2
+
+O(n) *
+
+## Task 3
+
+O(n) *
+
+## Task 4
+
+O(n) *
+
+
+### * Note
+
+I'm not sure how the effect of "if x in list" is counted towards the complexity of the algorithm.
+Depending on the internal implementation of this expression, if implemented as a loop, these algorithm would rank as O(n^2.)
