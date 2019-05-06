@@ -48,12 +48,15 @@ def isFromBangalore( number ):
   return number.startswith('(080)')
 
 def getAreaCode( number ):
-  if number.startswith( '(' ):         # fixed line
+  # fixed line
+  if number.startswith( '(' ):
     return number.split( ')' )[0].strip( '()' )
-  elif number.startswith( '140' ):     # telemarketer
+  # telemarketer
+  elif number.startswith( '140' ):
     return '140'
-  else:
-    return number.split()[0]           # mobile
+  # mobile
+  elif number.find(' ') > -1 and number[0] in {'7', '8', '9'}:
+    return number[:4]                  
 
 codes_bangalore = list()
 total_bangalore_calls_count = 0
