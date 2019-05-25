@@ -6,13 +6,6 @@ class HuffNode(object):
         self.freq = freq
         self.left = None
         self.right = None
-    
-    @classmethod
-    def from_tuple(self, char_freq_tuple):
-        self.char = char_freq_tuple[0]
-        self.freq = char_freq_tuple[1]
-        self.left = None
-        self.right = None
 
     def is_leaf(self):
         return not (self.left or self.right)
@@ -77,6 +70,7 @@ def decode_next(data, index, tree):
 
 
 def huffman_encoding(text):
+    assert(text)
     huff_tree = build_huff_tree( text )
     huff_map = trim_huff_tree( huff_tree, '' )
     data = ''
@@ -85,27 +79,64 @@ def huffman_encoding(text):
     return data, huff_tree
 
 
-def huffman_decoding(data,tree):
+def huffman_decoding(data, tree):
+    assert(data)
+    assert(tree)
     text, next_index = decode_next( data, 0, tree )
     while next_index < len(data):
         next_char, next_index = decode_next( data, next_index, tree )
         text += next_char
     return text
 
-if __name__ == "__main__":
-    codes = {}
-
-    a_great_sentence = "The bird is the word"
-
-    print ("The size of the data is: {}\n".format(sys.getsizeof(a_great_sentence)))
-    print ("The content of the data is: {}\n".format(a_great_sentence))
-
-    encoded_data, tree = huffman_encoding(a_great_sentence)
-
-    print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data, base=2))))
-    print ("The content of the encoded data is: {}\n".format(encoded_data))
-
+def test_encoding(text):
+    print ("Original Text:\t\t {}".format( text ))
+    print ("Size:\t\t\t {}".format( sys.getsizeof(text) ))
+    
+    encoded_data, tree = huffman_encoding(text)
+    print ("Huffman Encoding:\t {}".format(encoded_data))
+    print ("Size:\t\t\t {}".format( sys.getsizeof( int(encoded_data, base=2) ) ))
+    
     decoded_data = huffman_decoding(encoded_data, tree)
+    print ("Decoded Text:\t\t {}".format(decoded_data))
+    print ("Size:\t\t\t {}".format( sys.getsizeof(decoded_data) ))
+    
+    return decoded_data == text
 
-    print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
-    print ("The content of the encoded data is: {}\n".format(decoded_data))
+print( test_encoding("ABBBBABBABABBBAABABABAABABA") )
+#Original Text:     ABBBBABBABABBBAABABABAABABA
+#Size:              76
+#Huffman Encoding:  011110110101110010101001010
+#Size:              28
+#Decoded Text:      ABBBBABBABABBBAABABABAABABA
+#Size:              76
+#True
+
+print( test_encoding("Test") )
+#Original Text:     Test
+#Size:              53
+#Huffman Encoding:  01001110
+#Size:              28
+#Decoded Text:      Test
+#Size:              53
+#True
+
+print( test_encoding("The bird is the word") )
+#Original Text:      The bird is the word
+#Size:               69
+#Huffman Encoding:   1110100100010111000110101101100111111110111100010001011001110000101101
+#Size:               36
+#Decoded Text:       The bird is the word
+#Size:               69
+#True
+
+print( test_encoding("Androids dream of electric sheep.") )
+#Original Text:     Androids dream of electric sheep.
+#Size:              82
+#Huffman Encoding:  0100101000000110111000011000001001100011011110101101010011110010101011111101001111001101111101001110010110010101101111111000110000
+#Size:              44
+#Decoded Text:      Androids dream of electric sheep.
+#Size:              82
+#True
+
+#print( test_encoding("") )
+# AssertionError

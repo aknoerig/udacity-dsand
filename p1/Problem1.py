@@ -28,26 +28,45 @@ class LRU_Cache(object):
             self.history.append(key)
         self.cache[key] = value
 
-    def print(self):
+    def __str__(self):
         # print cache by usage order (oldest first)
-        print('{ ', sep='', end='')
+        string = '{ '
         for key in self.history:
-            print(key, self.cache[key], sep=':', end=', ')
-        print(' }', sep='', end='')
+            string += str(key) + ':' + str(self.cache[key]) + ', '
+        string += ' }'
+        return string
 
 our_cache = LRU_Cache(5)
 
 our_cache.set(1, 1)
 our_cache.set(2, 2)
 our_cache.set(3, 3)
+print(our_cache)
+# fill partially
+# { 1:1, 2:2, 3:3 }
+
 our_cache.set(4, 4)
 our_cache.set(5, 5)
+print(our_cache)
+# fill completely
+# { 1:1, 2:2, 3:3, 4:4, 5:5 }
+
 our_cache.get(1)
 our_cache.get(2)
 our_cache.get(3)
-our_cache.print() # prints 4, 5, 1, 2, 3
+print(our_cache)
+# 'use' old values
+# { 4:4, 5:5, 1:1, 2:2, 3:3 }
 
 our_cache.set(6, 6)
 our_cache.set(7, 7)
 our_cache.set(8, 8)
-our_cache.print() # prints 2, 3, 6, 7, 8
+print(our_cache)
+# overflow cache
+# { 2:2, 3:3, 6:6, 7:7, 8:8 }
+
+our_cache.set(9, 9)
+our_cache.set(9, 10)
+print(our_cache)
+# change value
+# { 3:3, 6:6, 7:7, 8:8, 9:10 }
