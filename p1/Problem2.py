@@ -16,8 +16,6 @@ def find_files(suffix, path):
    Returns:
       a list of paths
    """
-   assert(suffix)
-   assert(path)
    found_files = []
 
    if os.path.isfile( path ):
@@ -29,16 +27,3 @@ def find_files(suffix, path):
    return found_files
 
 print( find_files('.c', './testdir') )
-#['./testdir/subdir3/d.c', './testdir/subdir2/c.c', './testdir/subdir2/subsubdirA/b.c', './testdir/e.c', './testdir/subdir.c/a.c']
-
-print( find_files('.h', './testdir') )
-#['./testdir/subdir2/subsubdirA/b.h', './testdir/subdir1/a.h']
-
-print( find_files('.py', './testdir') )
-#[]
-
-#print( find_files('', './testdir') )
-# AssertionError
-
-#print( find_files(None, './testdir') )
-# AssertionError
