@@ -9,15 +9,20 @@ def sqrt(number):
     Returns:
        int: Floored Square Root
     """
-    def _sqrt(number, counter):
-        square = counter * counter
-        if square == number:
-            return counter
-        if square > number:
-            return counter - 1
-        return _sqrt(number, counter + 1)
+    def _sqrt(number, root):
+        delta = (number / root) - root
+        if abs(delta) < 1:
+            return math.floor(root)
+        if delta < 0:
+            return _sqrt(number, root / 2)
+        if delta > 0:
+            return _sqrt(number, root * 3 / 2)
 
-    return _sqrt(number, 0)
+    if number == 0:
+        return 0
+    if number == 1:
+        return 1
+    return _sqrt(number, number / 2)
 
 print ("Pass" if  (0 == sqrt(0)) else "Fail")
 print ("Pass" if  (1 == sqrt(1)) else "Fail")
