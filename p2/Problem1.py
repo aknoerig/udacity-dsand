@@ -17,6 +17,20 @@ def sqrt(number):
             return approx_sqrt(number, root / 2)
         if delta > 0:
             return approx_sqrt(number, root * 3 / 2)
+
+    def _sqrt(number, low, high):
+        mid = (low + high) // 2
+        delta = number - (mid * mid)
+        if delta == 0 or low == high:
+            return mid
+        if high - low == 1:
+            if high ** 2 > number:
+                return low
+            return high
+        if delta < 0:
+            return _sqrt(number, low, mid)
+        if delta > 0:
+            return _sqrt(number, mid, high)
     
     def newton_sqrt(number):
         x = number
@@ -31,7 +45,8 @@ def sqrt(number):
     if number == 1:
         return 1
     #return approx_sqrt(number, number / 2)
-    return newton_sqrt(number)
+    #return newton_sqrt(number)
+    return _sqrt(number, 0, number // 2)
 
 print(sqrt(0))
 # 0
