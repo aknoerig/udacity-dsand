@@ -40,12 +40,26 @@ def rearrange_digits(input_list):
 
 def test_function(test_case):
     output = rearrange_digits(test_case[0])
+    print(output)
     solution = test_case[1]
     if sum(output) == sum(solution):
         print("Pass")
     else:
         print("Fail")
 
-test_function([[1, 2, 3, 4, 5], [542, 31]])
-test_function([[4, 6, 2, 5, 9, 8], [964, 852]])
+test_function([[], [0, 0]])
+# (0, 0)
+test_function([[0], [0, 0]])
+# (0, 0)
 test_function([[0, 1], [0, 1]])
+# (0, 1)
+test_function([[1, 2, 3, 4, 5], [542, 31]])
+# (542, 31)
+test_function([[4, 6, 2, 5, 9, 8], [964, 852]])
+# (964, 852)
+
+import random
+l = [i for i in range(0, 9)]  # a list containing 0 - 999
+random.shuffle(l)
+test_function([l, [86420, 7531]])
+# (86420, 7531)

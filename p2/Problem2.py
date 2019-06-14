@@ -33,6 +33,9 @@ def rotated_array_search(input_list, target):
             return pivot_search(input_list, left, middle - 1)
         return pivot_search(input_list, middle + 1, right)
 
+    if len(input_list) < 1:
+        return -1
+
     pivot = pivot_search(input_list, 0, len(input_list) - 1)
     if pivot == -1:
         return binary_search(input_list, target, 0, len(input_list - 1))
@@ -53,31 +56,42 @@ def linear_search(input_list, target):
 def test_function(test_case):
     input_list = test_case[0]
     target = test_case[1]
-    if linear_search(input_list, target) == rotated_array_search(input_list, target):
+    output = rotated_array_search(input_list, target)
+    print(output)
+    if linear_search(input_list, target) == output:
         print("Pass")
     else:
         print("Fail")
 
-test_function([[3,1,2], 3])
-test_function([[3,1,2], 1])
-test_function([[3,1,2], 2])
+test_function([[], 0])
+# -1
+test_function([[1], 1])
+# 0
+test_function([[1, 2, 3], 2])
+# 1
 
-test_function([[2,3,1], 2])
-test_function([[2,3,1], 3])
-test_function([[2,3,1], 1])
-
-test_function([[1,2,3], 1])
-test_function([[1,2,3], 2])
-test_function([[1,2,3], 3])
+test_function([[3, 1, 2], 3])
+# 0
+test_function([[3, 1, 2], 1])
+# 1
+test_function([[3, 1, 2], 2])
+# 2
 
 test_function([[6, 7, 8, 9, 10, 1, 2, 3, 4], 6])
+# 0
 test_function([[6, 7, 8, 9, 10, 1, 2, 3, 4], 1])
+# 5
 test_function([[6, 7, 8, 9, 10, 1, 2, 3, 4], 4])
+# 8
 
 test_function([[6, 7, 8, 9, 10, 11, 12, 3, 4], 7])
+# 1
 test_function([[6, 7, 8, 9, 10, 11, 12, 3, 4], 3])
+# 7
 
 test_function([[6, 7, 8, 9, 1, 2, 3, 4], 8])
-test_function([[6, 7, 8, 9, 1, 2, 3, 4], 1])
+# 2
 test_function([[6, 7, 8, 9, 1, 2, 3, 4], 3])
+# 6
 test_function([[6, 7, 8, 9, 1, 2, 3, 4], 10])
+# -1

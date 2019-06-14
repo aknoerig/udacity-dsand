@@ -82,13 +82,29 @@ class Router:
 
 # Tests
 
-# create the router and add a route
-router = Router("root handler", "not found handler") # remove the 'not found handler' if you did not implement this
-router.add_handler("/home/about", "about handler")  # add a route
+router = Router("root handler", "not found handler")
+router.add_handler("/home/about", "about handler")
 
-# some lookups with the expected output
-print(router.lookup("/")) # should print 'root handler'
-print(router.lookup("/home")) # should print 'not found handler' or None if you did not implement one
-print(router.lookup("/home/about")) # should print 'about handler'
-print(router.lookup("/home/about/")) # should print 'about handler' or None if you did not handle trailing slashes
-print(router.lookup("/home/about/me")) # should print 'not found handler' or None if you did not implement one
+print(router.lookup("/")) 
+# 'root handler'
+print(router.lookup("/home"))
+# 'not found handler'
+print(router.lookup("/home/about"))
+# 'about handler'
+print(router.lookup("/home/about/"))
+# 'about handler'
+print(router.lookup("/home/about/me"))
+# 'not found handler'
+
+router.add_handler("/home", "home handler")
+router.add_handler("/home/contact", "contact handler")
+router.add_handler("/home/contact/berlin", "berlin contact handler")
+router.add_handler("/home/contact/ny", "new york contact handler")
+print(router.lookup("/home"))
+# 'home handler'
+print(router.lookup("/home/contact"))
+# 'contact handler'
+print(router.lookup("/home/contact/berlin"))
+# 'berlin contact handler'
+print(router.lookup("/home/contact/ny"))
+# 'new york contact handler'
